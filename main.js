@@ -2,6 +2,7 @@ import { browser } from "k6/browser";
 import { runCase as case_loginClick } from "./testCases/case_login_click.js";
 import { runCase as case_draftToFlowApprovedAndReturn } from "./testCases/case_draftToFlowApprovedAndReturn.js";
 import { runCase as case_clickAndToFlowApprovedAndReturn } from "./testCases/case_clickAndToFlowApprovedAndReturn.js";
+import { runCase as case_testParam } from "./testCases/case_testParam.js";
 
 export const options = {
   scenarios: {
@@ -33,6 +34,10 @@ export default async function () {
 
     case "loginClickAndDraftToFlowApprovedAndReturn":
       await case_clickAndToFlowApprovedAndReturn(page);
+      break;
+
+    case "testParam":
+      await case_testParam(page);
       break;
 
     default:

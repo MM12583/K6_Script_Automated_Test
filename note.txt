@@ -11,6 +11,9 @@ k6 run --summary-export=summary.json -e CASE=loginClick main.js
 k6 run --summary-export=summary.json -e CASE=draftToFlowApprovedAndReturn main.js
 k6 run --summary-export=summary.json -e CASE=loginClickAndDraftToFlowApprovedAndReturn main.js
 
+--測試各種參數
+k6 run --summary-export=summary.json -e CASE=testParam -e SERNO=202512020008 -e PROJECT_NAME="Frank 測試空白Email v1.0.0" main.js 
+
 --------------------------------------------------------
 --修改設定檔
 config.json

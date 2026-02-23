@@ -6,7 +6,8 @@ export default async function testParam(page) {
     page,
     page.locator("li:nth-of-type(5) li:nth-of-type(2) > .flex-row-start")
   );
-
+  
+  // overview 依流水號取
   await safeClick(
     page,
     page.getByRole("cell", { name: __ENV.SERNO, exact: true })
@@ -14,6 +15,7 @@ export default async function testParam(page) {
 
    await waitPageStable(page);
 
+  // 申請單專案頁依專案名稱取
   const card = page.getByRole('heading', {
     name: __ENV.PROJECT_NAME,
   });

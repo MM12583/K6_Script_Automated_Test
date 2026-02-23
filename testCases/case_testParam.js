@@ -4,7 +4,7 @@ import { runStep } from "../utils/runStep.js";
 
 export async function runCase(page) {
 
-  const CASE = "loginClick";
+  const CASE = "testParam";
 
   await runStep(CASE, "loginFlow", () =>
     loginFlow(page)

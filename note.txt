@@ -1,0 +1,59 @@
+setx K6_BROWSER_HEADLESS false
+
+k6 run login_flow.js
+
+k6 run -e CASE=loginClick main.js
+k6 run -e CASE=draftToFlowApprovedAndReturn main.js
+k6 run -e CASE=loginClickAndDraftToFlowApprovedAndReturn main.js
+
+--結果JSON
+k6 run --summary-export=summary.json -e CASE=loginClick main.js
+k6 run --summary-export=summary.json -e CASE=draftToFlowApprovedAndReturn main.js
+k6 run --summary-export=summary.json -e CASE=loginClickAndDraftToFlowApprovedAndReturn main.js
+
+--------------------------------------------------------
+--修改設定檔
+config.json
+
+--------------------------------------------------------
+個別 flow、task 拿掉 
+
+import { browser } from "k6/browser";
+
+export const options = {
+  scenarios: {
+    default: {
+      executor: "shared-iterations",
+      options: { browser: { type: "chromium",locale: "zh-TW" } },
+    },
+  },
+};
+
+const page = await browser.newPage();
+
+--------------------------------------------------------
+個別 flow、task 修改
+export default async function : 要給名子& 傳入Page
+
+
+flow、task(結點)尾加入 (等待 Loading 完) 
+await page.waitForLoadState("networkidle");
+
+--------------------------------------------------------
+操作需要等待回復時間 example : 
+const subLast = page.locator("li:nth-of-type(4) > .align-items-center");
+await subLast.waitFor({ state: "visible", timeout: 10000 });
+await page.waitForTimeout(2000);
+await subLast.click();
+
+or
+
+import { safeClick, safeCheck } from "../utils/ui.js";
+點擊改 safeClick
+
+-------------------------------------------------------- 
+K6 產生腳本 取元素可能該頁面會重複  example : 
+ await safeClick(page, page.locator(".text-nowrap").first());
+ 或其他改法
+
+-------------------------------------------------------- 

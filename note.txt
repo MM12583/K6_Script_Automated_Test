@@ -1,3 +1,11 @@
+---------------------------------------------
+install
+
+https://github.com/grafana/k6/releases
+https://github.com/grafana/k6-studio
+---------------------------------------------
+CMD
+
 setx K6_BROWSER_HEADLESS false
 
 k6 run login_flow.js
@@ -10,6 +18,7 @@ k6 run -e CASE=loginClickAndDraftToFlowApprovedAndReturn main.js
 k6 run --summary-export=summary.json -e CASE=loginClick main.js
 k6 run --summary-export=summary.json -e CASE=draftToFlowApprovedAndReturn main.js
 k6 run --summary-export=summary.json -e CASE=loginClickAndDraftToFlowApprovedAndReturn main.js
+k6 run --summary-export=summary.json -e CASE=createCabformToDraft main.js
 
 --測試各種參數
 k6 run --summary-export=summary.json -e CASE=testParam -e SERNO=202512020008 -e PROJECT_NAME="Frank 測試空白Email v1.0.0" main.js 
@@ -40,7 +49,10 @@ export default async function : 要給名子& 傳入Page
 
 
 flow、task(結點)尾加入 (等待 Loading 完) 
-await page.waitForLoadState("networkidle");
+await page.waitForLoadState("networkidle");  
+或
+import {waitPageStable} from "../utils/ui.js";
+await waitPageStable(page);
 
 --------------------------------------------------------
 操作需要等待回復時間 example : 

@@ -3,6 +3,7 @@ import { runCase as case_loginClick } from "./testCases/case_login_click.js";
 import { runCase as case_draftToFlowApprovedAndReturn } from "./testCases/case_draftToFlowApprovedAndReturn.js";
 import { runCase as case_clickAndToFlowApprovedAndReturn } from "./testCases/case_clickAndToFlowApprovedAndReturn.js";
 import { runCase as case_testParam } from "./testCases/case_testParam.js";
+import { runCase as case_createCabformToDraft } from "./testCases/case_createCabformToDraft.js";
 
 export const options = {
   scenarios: {
@@ -21,7 +22,12 @@ export const options = {
 };
 
 export default async function () {
-  const page = await browser.newPage();
+
+  const context = await browser.newContext({
+    ignoreHTTPSErrors: true, 
+  });
+  
+  const page = await context.newPage();
 
   switch (__ENV.CASE) {
     case "loginClick":
@@ -38,6 +44,10 @@ export default async function () {
 
     case "testParam":
       await case_testParam(page);
+      break;
+    
+    case "createCabformToDraft":
+      await case_createCabformToDraft(page);
       break;
 
     default:
